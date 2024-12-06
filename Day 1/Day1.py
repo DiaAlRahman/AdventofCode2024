@@ -1,3 +1,5 @@
+# Started: 5:52PM ,Ended: 6:15PM
+
 # Part 1
 file = open('location_ids.txt', 'r')
 location_ids = file.readlines()
