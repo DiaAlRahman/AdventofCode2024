@@ -1,4 +1,4 @@
-# Started: 6:21pm
+# Started: 6:21pm, Ended: 7:50pm
 import re
 
 # Test cases that allowed me to learn the mechanics of the functions in the 'regex' docs of Python
@@ -25,12 +25,25 @@ def total_of_products(instruction_line):
     return total
 
 
+# test_case2 = "xmul(2,4)&mul[3,7]!^don't()_mul(5,5)+mul(32,64](mul(11,8)undo()?mul(8,5))"
+
+
+def clean_instruction(instruction_line):
+    enabled = []
+    pre_enabled = instruction_line.split("do()")  # split code into enabled sections
+    for partial in pre_enabled:
+        # with "do" being split first, it is guaranteed that anything after
+        # "don't" in each of those sections can entirely be disregarded safely
+        # as such only the instruction before "don't" is stored
+        enabled.append(partial.split("don't()")[0])
+    return ''.join(enabled)
+
+
 file = open('./memory.txt')
 instructions = file.readlines()
+instructions = ''.join(instructions)
 
-final_total = 0
-for instruction in instructions:
-    final_total += total_of_products(instruction)
+todo = clean_instruction(instructions)
+total = total_of_products(todo)
 
-print(final_total)
-
+print(total)
